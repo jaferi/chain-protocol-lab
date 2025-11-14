@@ -3,7 +3,7 @@ use core::str;
 use ed25519_dalek::{Keypair, PublicKey, Signature, Signer};
 use rand::rngs::OsRng;
 use serde::{Serialize, Deserialize};
-
+use std::hash::{Hash, Hasher};
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PeerId {
     // The identity of a node
@@ -15,13 +15,6 @@ pub struct PeerId {
 pub struct LocalPeer {
     // it should be secured and private
     pub keypair: Keypair,
-}
-
-pub struct Node {
-    pub local: LocalPeer,
-    pub peer_id: PeerId,
-    pub known_peers: Vec<PeerId>,
-    pub received_msgs: Vec<String>   
 }
 
 impl LocalPeer {
@@ -47,22 +40,16 @@ impl LocalPeer {
     }
 }
 
+impl Hash for PeerId {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        state.write(self.public_key.as_bytes());
+    }
+}
+
 impl PeerId {
     // human-readable ID (for debugging)
     pub fn short(&self) -> String {
         let bytes = self.public_key.as_bytes();
         format!("{:02x}{:02x}{:02x}{:02x}...", bytes[0], bytes[1], bytes[2], bytes[3])
-    }
-}
-
-impl Node {
-    pub fn new() -> Self {
-        let local = LocalPeer::generate();
-        let peer_id = local.peer_id();
-        
-        let known_peers: Vec<PeerId> = vec![];
-        let received_msgs: Vec<String> = vec![];
-
-        Node {local, peer_id, known_peers, received_msgs}
     }
 }
