@@ -18,8 +18,9 @@ pub struct LocalPeer {
 }
 
 pub struct Node {
-    pub peer: LocalPeer,
-    pub id: PeerId,
+    pub local: LocalPeer,
+    pub peer_id: PeerId,
+    
 }
 
 impl LocalPeer {
@@ -55,8 +56,8 @@ impl PeerId {
 
 impl Node {
     pub fn new() -> Self {
-        let peer = LocalPeer::generate();
-        let id = peer.peer_id();
-        Node {peer, id}
+        let local = LocalPeer::generate();
+        let peer_id = local.peer_id();
+        Node {local, peer_id}
     }
 }
