@@ -1,0 +1,45 @@
+# Rust
+/target
+**/target
+**/*.rs.bk
+
+# Cargo
+# (leave Cargo.lock in VCS for apps/workspaces; uncomment if you want to ignore it)
+# Cargo.lock
+
+# VS Code / editors / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets / keys
+.env
+*.pem
+*.key
+*.seed
+*.secret
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# Node / frontend
+node_modules/
+
+# Build / coverage
+/build
+coverage/
+*.prof
+
+# Python / notebooks
+.ipynb_checkpoints
+
+# Misc
+.gradle

@@ -1,0 +1,4 @@
+[workspace]
+members = ["p2p", "consensus", "example"]
+resolver = "3"
+
