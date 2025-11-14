@@ -52,18 +52,18 @@ fn simple_message_test_automatic_nodes() {
         let node_to: &Node = nodes.choose(&mut rng).unwrap();
 
         // skip if two nodes are same
-        if node_from.id == node_to.id { continue; }
+        if node_from.peer_id == node_to.peer_id { continue; }
 
 
-        let peer_from = node_from.id.clone();
-        let peer_to = node_to.id.clone();
+        let peer_from = node_from.peer_id.clone();
+        let peer_to = node_to.peer_id.clone();
 
 
         println!("Node Sender ID: {:?}", peer_from.short());
         println!("Node Receiver ID: {:?}", peer_to.short());
 
         let content: String = format!("Hello from Node {} to {}", peer_from.short(), peer_to.short()).to_string();
-        let sender_signature = node_from.peer.sign(content.as_bytes());
+        let sender_signature = node_from.local.sign(content.as_bytes());
 
         let msg: Message = Message { 
             from: peer_from.public_key.as_bytes().to_vec(), 
