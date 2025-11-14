@@ -1,3 +1,5 @@
+use core::str;
+
 use ed25519_dalek::{Keypair, PublicKey, Signature, Signer};
 use rand::rngs::OsRng;
 use serde::{Serialize, Deserialize};
@@ -13,6 +15,11 @@ pub struct PeerId {
 pub struct LocalPeer {
     // it should be secured and private
     pub keypair: Keypair,
+}
+
+pub struct Node {
+    pub peer: LocalPeer,
+    pub id: PeerId,
 }
 
 impl LocalPeer {
@@ -43,5 +50,13 @@ impl PeerId {
     pub fn short(&self) -> String {
         let bytes = self.public_key.as_bytes();
         format!("{:02x}{:02x}{:02x}{:02x}...", bytes[0], bytes[1], bytes[2], bytes[3])
+    }
+}
+
+impl Node {
+    pub fn new() -> Self {
+        let peer = LocalPeer::generate();
+        let id = peer.peer_id();
+        Node {peer, id}
     }
 }
