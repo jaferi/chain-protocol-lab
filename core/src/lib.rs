@@ -44,4 +44,13 @@ impl Block {
             transactions,
         }
     }
+
+    pub fn hash(&self) -> Hash {
+        use bincode::Options;
+        let encoded = bincode::DefaultOptions::new().serialize(self).expect("serialize");
+        let mut out = blake3::hash(&encoded).as_bytes().clone();
+        let mut h = [0u8; 32];
+        h.copy_from_slice(&out);
+        h
+    }
 }
