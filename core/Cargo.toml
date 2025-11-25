@@ -9,3 +9,4 @@ resolver = "3"
 serde = { workspace = true }
 bincode = { workspace = true }
 blake3 = { workspace = true }
+anyhow = { workspace = true }
